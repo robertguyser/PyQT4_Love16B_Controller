@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../numpyQwtPlot/.idea/numpyQwtPlot.iml" filepath="$PROJECT_DIR$/../numpyQwtPlot/.idea/numpyQwtPlot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/organization.iml" filepath="$PROJECT_DIR$/.idea/organization.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../qThreadLearning/.idea/qThreadLearning.iml" filepath="$PROJECT_DIR$/../qThreadLearning/.idea/qThreadLearning.iml" />
+    </modules>
+  </component>
+</project>

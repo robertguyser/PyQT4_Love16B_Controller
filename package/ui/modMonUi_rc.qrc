@@ -1,0 +1,29 @@
+<RCC>
+  <qresource prefix="/">
+    <file>help-about.svg</file>
+    <file>gtk-media-pause.png</file>
+    <file>gtk-media-play-ltr.png</file>
+    <file>gtk-media-stop.png</file>
+    <file>gtk-refresh.svg</file>
+    <file>Bill.svg</file>
+    <file>PCboard.svg</file>
+    <file>RAM.svg</file>
+    <file>Research.svg</file>
+    <file>USBcable.svg</file>
+    <file>Analyzeloop.svg</file>
+    <file>gnome-help.svg</file>
+    <file>stock_save.svg</file>
+    <file>application-exit.svg</file>
+    <file>ksim_cpu.svg</file>
+    <file>memory.svg</file>
+    <file>blockdevice.svg</file>
+    <file>usbpendrive_unmount.svg</file>
+    <file>editdelete.svg</file>
+    <file>tool_logwindow.svg</file>
+    <file>player_play.svg</file>
+    <file>player_stop.svg</file>
+    <file>1downarrow.svg</file>
+    <file>1uparrow.svg</file>
+    <file>list.svg</file>
+  </qresource>
+</RCC>

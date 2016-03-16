@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="162.5"
+   height="162.5"
+   id="svg101">
+  <defs
+     id="defs15" />
+  <path
+     d="M 8.09006,76.7965 L 151.701,76.1076 L 132.536,60.6804 L 132.637,92.5633 L 151.637,77.3477 L 8.09006,76.7965 z "
+     transform="matrix(0.944104,0,0,0.944104,9.581818,7.589769)"
+     style="font-size:12px;fill:#4a4b4f;fill-rule:evenodd;stroke:#4a4b4f;stroke-width:12.5;stroke-linecap:round;stroke-linejoin:round"
+     id="path1278" />
+  <ellipse
+     cx="7.7160978"
+     cy="76.52063"
+     rx="13.778747"
+     ry="13.778744"
+     transform="matrix(0.944104,0,0,0.944104,9.581818,7.589769)"
+     style="font-size:12px;fill:#4a4b4f;fill-rule:evenodd"
+     id="path1279" />
+  <path
+     d=""
+     style="font-size:12px;fill:none;fill-rule:evenodd;stroke:#000000"
+     id="path1284" />
+  <path
+     d="M 45.7454,80.9298 C 46.2966,41.7982 52.3593,34.0821 89.2862,34.0821"
+     transform="matrix(1,0,0,0.788235,0,16.0358)"
+     style="font-size:12px;fill:none;fill-rule:evenodd;stroke:#4a4b4f;stroke-width:14.07929993;stroke-linecap:round;stroke-linejoin:round"
+     id="path1285" />
+  <ellipse
+     cx="7.7160978"
+     cy="76.52063"
+     rx="13.778747"
+     ry="13.778744"
+     transform="matrix(0.944104,0,0,0.944104,86.19167,-29.88842)"
+     style="font-size:12px;fill:#4a4b4f;fill-rule:evenodd"
+     id="path1287" />
+  <path
+     d="M 45.7454,80.9298 C 46.2966,41.7982 52.3593,34.0821 89.2862,34.0821"
+     transform="matrix(1,0,0,-0.741176,29.21095,140.0356)"
+     style="font-size:12px;fill:none;fill-rule:evenodd;stroke:#4a4b4f;stroke-width:14.51939964;stroke-linecap:round;stroke-linejoin:round"
+     id="path1288" />
+  <ellipse
+     cx="7.7160978"
+     cy="76.52063"
+     rx="13.778747"
+     ry="13.778744"
+     transform="matrix(0.944104,0,0,-0.944104,116.5049,187.0125)"
+     style="font-size:12px;fill:#4a4b4f;fill-rule:evenodd"
+     id="path1289" />
+  <path
+     d="M 6.059254,157.344 L 6.059254,126.9406 L 14.02199,144.6963 L 22.0548,126.9406 L 22.0548,157.344"
+     style="font-size:12px;color:#000000;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:4.49171686;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:0;font-family:Bitstream Vera Sans"
+     id="path637" />
+  <path
+     d="M 28.51124,157.344 L 28.51124,126.9406 L 44.5067,157.344 L 44.5067,126.9406"
+     style="font-size:12px;color:#000000;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:4.49171877;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:0;font-family:Bitstream Vera Sans"
+     id="path639" />
+  <g
+     transform="matrix(0.239559,0,0,0.239559,-51.81836,-7.046661)"
+     style="font-size:12px;color:#000000;stroke-dashoffset:0;font-family:Bitstream Vera Sans"
+     id="g702">
+    <path
+       d="M 471.8266,559.4188 L 472.3706,686.3333"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:18.75;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:0"
+       id="path646" />
+    <path
+       d="M 428.157,559.4188 L 513.58,559.4188"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:18.75;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:0"
+       id="path647" />
+  </g>
+</svg>
