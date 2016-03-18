@@ -2,11 +2,14 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>879</width>
+    <width>912</width>
     <height>824</height>
    </rect>
   </property>
@@ -17,7 +20,7 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,0,0,0">
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="2,0,0,0">
     <property name="sizeConstraint">
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
@@ -35,17 +38,21 @@
      </widget>
     </item>
     <item>
-     <widget class="QwtSlider" name="Slider">
-      <property name="readOnly">
-       <bool>false</bool>
-      </property>
-      <property name="scalePosition">
-       <enum>QwtSlider::NoScale</enum>
-      </property>
-      <property name="bgStyle">
-       <enum>QwtSlider::BgSlot</enum>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QwtSlider" name="Slider">
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+        <property name="scalePosition">
+         <enum>QwtSlider::NoScale</enum>
+        </property>
+        <property name="bgStyle">
+         <enum>QwtSlider::BgSlot</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="Line" name="line_10">
@@ -55,11 +62,11 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,0,0,0,0,7">
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_7" stretch="1,0,0,0">
         <item>
-         <widget class="QDial" name="dial">
+         <widget class="QDial" name="plottingIntervalDial">
           <property name="minimum">
            <number>100</number>
           </property>
@@ -67,7 +74,10 @@
            <number>5000</number>
           </property>
           <property name="singleStep">
-           <number>10</number>
+           <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>100</number>
           </property>
           <property name="value">
            <number>1000</number>
@@ -84,13 +94,16 @@
           <property name="wrapping">
            <bool>false</bool>
           </property>
+          <property name="notchTarget">
+           <double>10.000000000000000</double>
+          </property>
           <property name="notchesVisible">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="timerLabel">
+         <widget class="QLabel" name="plottingIntervalLabel">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
@@ -104,13 +117,25 @@
         <item>
          <widget class="QDial" name="sampleIntervalDial">
           <property name="minimum">
-           <number>10</number>
+           <number>100</number>
           </property>
           <property name="maximum">
-           <number>1002</number>
+           <number>1000</number>
+          </property>
+          <property name="singleStep">
+           <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>500</number>
+          </property>
+          <property name="wrapping">
+           <bool>false</bool>
           </property>
           <property name="notchTarget">
-           <double>100.000000000000000</double>
+           <double>10.000000000000000</double>
           </property>
           <property name="notchesVisible">
            <bool>true</bool>
@@ -118,7 +143,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="timerLabel_2">
+         <widget class="QLabel" name="sampleIntervalLabel">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
@@ -209,7 +234,33 @@
          </widget>
         </item>
         <item>
+         <widget class="Line" name="line_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>DAQ Record</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="startButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Start recording DAQ at plotting interval</string>
+          </property>
           <property name="text">
            <string>Start</string>
           </property>
@@ -221,6 +272,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="resetButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Reset DAQ</string>
+          </property>
           <property name="text">
            <string>Reset</string>
           </property>
@@ -232,6 +289,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="stopButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Stop Taking DAQ data (cannot restart)</string>
+          </property>
           <property name="text">
            <string>Stop</string>
           </property>
@@ -253,7 +316,10 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QSlider" name="verticalSlider">
+         <widget class="QSlider" name="svVerticalSlider">
+          <property name="statusTip">
+           <string>Value to set SV to</string>
+          </property>
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
           </property>
@@ -267,6 +333,16 @@
         </item>
         <item>
          <widget class="QLCDNumber" name="SvLcdNumber">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
           <property name="smallDecimalPoint">
            <bool>false</bool>
           </property>
@@ -280,6 +356,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="setSvButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Set the SV on the Love 16B</string>
+          </property>
           <property name="text">
            <string>Set SV</string>
           </property>
@@ -300,14 +382,20 @@
       </item>
       <item>
        <widget class="QTabWidget" name="tabWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="statusTip">
+         <string/>
+        </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>3</number>
         </property>
         <property name="iconSize">
          <size>
@@ -325,9 +413,58 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
+           <widget class="QComboBox" name="portComboBox">
+            <property name="statusTip">
+             <string>Com port for ModBus connection</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0">
-             <widget class="QComboBox" name="portComboBox"/>
+            <item row="0" column="3">
+             <widget class="QDoubleSpinBox" name="timoutDoubleSpinBox">
+              <property name="decimals">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.100000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="stopBitsComboBox">
+              <item>
+               <property name="text">
+                <string>1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>1.5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>2</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_14">
+              <property name="text">
+               <string>Parity:</string>
+              </property>
+              <property name="wordWrap">
+               <bool>false</bool>
+              </property>
+              <property name="margin">
+               <number>0</number>
+              </property>
+             </widget>
             </item>
             <item row="0" column="1">
              <widget class="QComboBox" name="baudComboBox">
@@ -368,34 +505,11 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_14">
+            <item row="1" column="2">
+             <widget class="QLabel" name="label_15">
               <property name="text">
-               <string>Parity:</string>
+               <string>Data Bits:</string>
               </property>
-              <property name="wordWrap">
-               <bool>false</bool>
-              </property>
-              <property name="margin">
-               <number>0</number>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QComboBox" name="dataBitsComboBox">
-              <property name="currentIndex">
-               <number>1</number>
-              </property>
-              <item>
-               <property name="text">
-                <string>7</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>8</string>
-               </property>
-              </item>
              </widget>
             </item>
             <item row="3" column="1">
@@ -420,33 +534,31 @@
               </item>
              </widget>
             </item>
-            <item row="1" column="2">
-             <widget class="QLabel" name="label_15">
+            <item row="1" column="3">
+             <widget class="QComboBox" name="dataBitsComboBox">
+              <property name="currentIndex">
+               <number>1</number>
+              </property>
+              <item>
+               <property name="text">
+                <string>7</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>8</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_16">
               <property name="text">
-               <string>Data Bits:</string>
+               <string>Modbus Timeout</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QComboBox" name="stopBitsComboBox">
-              <item>
-               <property name="text">
-                <string>1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>1.5</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>2</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="3" column="3">
+            <item row="3" column="2">
              <widget class="QPushButton" name="connectButton">
               <property name="palette">
                <palette>
@@ -493,7 +605,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Connect RTU Modbus</string>
+               <string>Connect Modbus</string>
               </property>
               <property name="icon">
                <iconset resource="modMonUi_rc.qrc">
@@ -504,23 +616,23 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="3">
-             <widget class="QDoubleSpinBox" name="timoutDoubleSpinBox">
-              <property name="decimals">
-               <number>1</number>
+            <item row="3" column="3">
+             <widget class="QPushButton" name="disconnectButton">
+              <property name="enabled">
+               <bool>false</bool>
               </property>
-              <property name="maximum">
-               <double>1.000000000000000</double>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
               </property>
-              <property name="value">
-               <double>0.100000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QLabel" name="label_16">
               <property name="text">
-               <string>Modbus Timeout</string>
+               <string>Disconnect ModBus</string>
+              </property>
+              <property name="icon">
+               <iconset resource="modMonUi_rc.qrc">
+                <normaloff>:/editdelete.svg</normaloff>:/editdelete.svg</iconset>
               </property>
              </widget>
             </item>
@@ -554,7 +666,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLCDNumber" name="lcdNumber">
+             <widget class="QLCDNumber" name="pvLcdNumber">
               <property name="palette">
                <palette>
                 <active>
@@ -605,6 +717,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="getPvButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="statusTip">
+               <string>Get PV from Love 16B</string>
+              </property>
               <property name="text">
                <string>Get PV</string>
               </property>
@@ -633,7 +751,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLCDNumber" name="lcdNumber_2">
+             <widget class="QLCDNumber" name="svLcdNumber">
               <property name="palette">
                <palette>
                 <active>
@@ -681,6 +799,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="getSvButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="statusTip">
+               <string>Get SV from Love 16B</string>
+              </property>
               <property name="text">
                <string>Get SV</string>
               </property>
@@ -702,16 +826,31 @@
          <attribute name="title">
           <string>Monitor</string>
          </attribute>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
            <widget class="QTextEdit" name="dataTextEdit">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="statusTip">
+             <string>Message log...</string>
+            </property>
             <property name="html">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Love 16B Data Monitor...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="monitorScrollCheckBox">
+            <property name="text">
+             <string>Scroll to Bottom</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -725,11 +864,11 @@ p, li { white-space: pre-wrap; }
          <attribute name="title">
           <string>DAQ Viewer</string>
          </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_12">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <widget class="QTableWidget" name="DaqTableWidget">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -740,17 +879,29 @@ p, li { white-space: pre-wrap; }
               <height>0</height>
              </size>
             </property>
+            <property name="midLineWidth">
+             <number>1</number>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOn</enum>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
             <attribute name="horizontalHeaderCascadingSectionResizes">
              <bool>false</bool>
             </attribute>
             <attribute name="horizontalHeaderMinimumSectionSize">
-             <number>2</number>
+             <number>25</number>
             </attribute>
             <attribute name="horizontalHeaderStretchLastSection">
              <bool>false</bool>
             </attribute>
             <attribute name="verticalHeaderVisible">
              <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderDefaultSectionSize">
+             <number>20</number>
             </attribute>
             <row>
              <property name="text">
@@ -856,18 +1007,34 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
-             <widget class="QCheckBox" name="checkBox">
+             <widget class="QCheckBox" name="daqScrollCheckBox">
               <property name="text">
                <string>Scroll to Bottom</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="daqSamplesTakenLabel">
               <property name="text">
                <string># of Samples Taken: 00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="clearDaqButton">
+              <property name="toolTip">
+               <string>Clear Program and Readout</string>
+              </property>
+              <property name="statusTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>Clear DAQ</string>
               </property>
              </widget>
             </item>
@@ -998,7 +1165,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>879</width>
+     <width>912</width>
      <height>21</height>
     </rect>
    </property>
@@ -1006,7 +1173,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionSave_Data"/>
+    <addaction name="actionSave_Daq"/>
     <addaction name="actionReset_DAQ"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -1034,7 +1201,7 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <addaction name="actionReset_DAQ"/>
    <addaction name="separator"/>
-   <addaction name="actionSave_Data"/>
+   <addaction name="actionSave_Daq"/>
    <addaction name="separator"/>
    <addaction name="actionExit"/>
    <addaction name="separator"/>
@@ -1059,7 +1226,7 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+X</string>
    </property>
   </action>
-  <action name="actionSave_Data">
+  <action name="actionSave_Daq">
    <property name="icon">
     <iconset resource="modMonUi_rc.qrc">
      <normaloff>:/stock_save.svg</normaloff>:/stock_save.svg</iconset>

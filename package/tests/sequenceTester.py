@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 mySequence = models.SequenceClass.SequenceClass(sequence_length=0)
 
 logger.info("Adding a bunch of Dummy Steps")
-for x in range(0,5000):
+for x in range(0,5):
     temp = random.randrange(0.0,200.0,1)
     rantime = random.randrange(0,2000,1)
     mySequence.add_step(temp, rantime)
@@ -48,5 +48,5 @@ mySequence.load_sequence()
 
 debug_object()
 
-mySequence.remove_step(99)
+#mySequence.remove_step(99)
 print h.heap()

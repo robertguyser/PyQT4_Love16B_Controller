@@ -69,11 +69,15 @@ class SequenceClass(object):
             self.logger.error(error_msg)
             return error_msg
 
-    def reset_sequence(self):
+    def reset_sequence(self, qtable = None):
         self.stepTemperatures = []
         self.stepTimesInSeconds = []
         self.steps = [self.stepTemperatures, self.stepTimesInSeconds]
         self.sequenceLength = 0
+
+        if qtable is not None:
+            qtable.reset()
+            qtable.setRowCount(0)
 
     def steps_roc(self, step1, step2):
         try:
@@ -85,36 +89,35 @@ class SequenceClass(object):
             self.logger.error(error_msg)
             return error_msg
 
-    def save_sequence(self, filename="sequence.txt"):
+    def save_sequence(self, filename="sequence.csv"):
         self.steps = [self.stepTemperatures, self.stepTimesInSeconds]
         np.savetxt(filename, (
             np.c_[self.stepTemperatures, self.stepTimesInSeconds]),
-                   delimiter=",", fmt="%s", header="Saved: %s" % datetime.datetime.now())
+                   delimiter=",", fmt="%.1f, %.1f", header="Time, Temperature, Saved: %s" % datetime.datetime.now())
 
-    def load_sequence(self, filename="sequence.txt"):
+    def load_sequence(self, filename="sequence.csv"):
         try:
-            loaded_data = np.genfromtxt((filename), unpack=True, delimiter=",", dtype=float)
-            loaded_data = loaded_data.astype(np.float16, copy=False) #a = a.astype(numpy.float32, copy=False)
-            print "loaded_data: ", loaded_data.tolist()
+            self.reset_sequence()
+            loaded_data = np.genfromtxt((filename), unpack=True, delimiter=",", dtype=str)
+            self.logger.info( "loaded_data: " + str(loaded_data.tolist()))
             self.stepTimesInSeconds = loaded_data[1].tolist()
-            print(loaded_data.dtype)
+            self.logger.info(loaded_data.dtype)
             self.stepTimesInSeconds = [float(x) for x in self.stepTimesInSeconds]
             self.stepTemperatures = loaded_data[0].tolist()
             self.stepTemperatures = [float(x) for x in self.stepTemperatures]
-
             self.steps = [self.stepTemperatures, self.stepTimesInSeconds]
             self.sequenceLength = (len(self.stepTemperatures))
-            loaded_data = None
+            self.logger.info("load_sequence() self.steps: " + str(self.steps))
         except (SystemExit, KeyboardInterrupt):
             raise
         except Exception, e:
             self.logger.error('Failed to open file', exc_info=True)
 
-    # Takes in an array and a QTWidgetTable reference, and then modifies the referenced QTWidgetTable
-    def get_sequence_qtable_from_array(self, array, qtable):
-        qtable.setRowCount(self.length())
-        for row in range(self.length()):
-            for column in range(2):
-                item = QtGui.QTableWidgetItem("(%f, %f)" % (row, column))
+
+    def get_sequence_qtable_from_array(self, array, qtable, rowcount):
+        qtable.setRowCount(rowcount)
+        for row in range(rowcount):
+            for column in range(0,2):
+                item = QtGui.QTableWidgetItem(QString("%1").arg(str(array[column][row])))
                 qtable.setItem(row,column, item)
         qtable.resizeColumnsToContents()

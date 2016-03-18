@@ -22,11 +22,12 @@ logger = logging.getLogger(__name__)
 darkUI = 1
 fancyUI = 0
 
+# This inserts double spinBoxes in a tableWidget
 class SpinBoxDelegate(QtGui.QItemDelegate):
     def createEditor(self, parent, option, index):
         editor = QtGui.QDoubleSpinBox (parent)
         editor.setMinimum(0.00)
-        editor.setMaximum(1000.00)
+        editor.setMaximum(10000.00)
         editor.setDecimals(1)
         return editor
 
@@ -34,6 +35,9 @@ class SpinBoxDelegate(QtGui.QItemDelegate):
         try:
             value = index.model().data(index, QtCore.Qt.EditRole)
             spinBox.setValue(float(value))
+            logger.debug( "setEditorData: value: " + str(float(value)))
+            logger.debug( "setEditorData: spinBox: " + str(spinBox))
+            logger.debug( "setEditorData: index: " + str(index))
         except:
             pass
 
@@ -44,7 +48,6 @@ class SpinBoxDelegate(QtGui.QItemDelegate):
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
-
 
 
 class TableTester(QtGui.QMainWindow, package.tests.ui.tableTestUI.Ui_MainWindow):
@@ -67,10 +70,9 @@ class TableTester(QtGui.QMainWindow, package.tests.ui.tableTestUI.Ui_MainWindow)
         self.actionLoad_Daq.triggered.connect(self.load_daq_file)
         self.actionSave_Program.triggered.connect(self.save_sequence)
         self.actionLoad_Program.triggered.connect(self.load_sequence)
+        # Table widget event connectors
+        self.sequenceTableWidget.itemChanged.connect(self.sequence_table_update)
         # Table Widget Spin-Box Deligate
-        model = QtGui.QStandardItemModel(4, 2)
-        #self.sequenceTableWidget = QtGui.QTableView()
-        self.sequenceTableWidget.setModel(model)
         self.delegate = SpinBoxDelegate()
         self.sequenceTableWidget.setItemDelegate(self.delegate)
         # Instantiation of model classes
@@ -93,12 +95,13 @@ class TableTester(QtGui.QMainWindow, package.tests.ui.tableTestUI.Ui_MainWindow)
             myDatetime = datetime.datetime.now()  # Gets the current Datetime
             temp = random.randrange(0.0, 200.0, 1)
             self.myDAQ.add_sample(sample_temp=temp, sample_time_ms=elapsed_time, sample_datetime=myDatetime,
-                             sample_setpoint=150, sample_error=None)
+                             sample_setpoint=setPoint, sample_error=None)
             elapsed_time  += timer_ms
         self.myDAQ.get_qtable_from_array(self.myDAQ.dataset, self.daqTableWidget)
 
     def clear_daq(self):
         self.myDAQ.reset_daq(self.daqTableWidget)
+
 
     def save_daq_file(self):
         logger.info("save_daq_file()")
@@ -111,42 +114,61 @@ class TableTester(QtGui.QMainWindow, package.tests.ui.tableTestUI.Ui_MainWindow)
         self.myDAQ.load_daq_data()
         self.myDAQ.get_qtable_from_array(self.myDAQ.dataset, self.daqTableWidget)
 
-######## Sequence CRUD Below! ###########
+######## Sequence CRUD Below ###########
     def add_sequence_step(self):
         rowcount = self.mySequence.length()
         logger.info("add_sequence_step(%s)" % rowcount)
         self.mySequence.add_step(0.0,0.0)
         rowcount = self.mySequence.length()
-        print "rowcount: ", rowcount
-        item = self.sequenceTableWidget.item(rowcount, 0).currentText()
-        print("1,0: %s" % self.sequenceTableWidget.item(0, 0).curtrentText())
-        if item is not None:
-            self.mySequence.stepTemperatures[rowcount] = item.text()
-        self.mySequence.get_sequence_qtable_from_array(self.mySequence.steps,self.sequenceTableWidget)
-        logger.info(self.mySequence.steps)
+        logger.info( "new rowcount: " + str(rowcount))
+        for row in xrange(0,rowcount-1):
+            step_time = self.sequenceTableWidget.item(row,0)
+            step_temperature = self.sequenceTableWidget.item(row,1)
+            self.mySequence.stepTemperatures[row]= float(step_time.text())
+            self.mySequence.stepTimesInSeconds[row] =  float(step_temperature.text())
+        self.mySequence.get_sequence_qtable_from_array(self.mySequence.steps,self.sequenceTableWidget, rowcount)
+        logger.info("add_sequence_step(): self.mySequence.steps: " + str(self.mySequence.steps))
 
     def remove_sequence_step(self):
         rowcount = self.mySequence.length()
         if rowcount > 1:
             rowcount = rowcount  - 1
-            logger.info("remove_sequence_step(%s)" % rowcount)
+            logger.info("remove_sequence_step(%s)" % str(rowcount))
             self.mySequence.remove_step(rowcount)
-            self.mySequence.get_sequence_qtable_from_array(self.mySequence.steps,self.sequenceTableWidget)
-            #self.sequenceTableWidget.setRowCount(rowcount)
-            logger.info(self.mySequence.steps)
+            self.mySequence.get_sequence_qtable_from_array(self.mySequence.steps,self.sequenceTableWidget, rowcount)
+            logger.info("remove_sequence_step(): self.mySequence.steps: " + str(self.mySequence.steps))
         pass
 
     def clear_sequence(self):
         logger.info("clear_sequence()")
-        pass
+        self.mySequence.reset_sequence(self.sequenceTableWidget)
+        self.add_sequence_step() # adds initial step to match UI
 
     def save_sequence(self):
         logger.info("save_sequence()")
-        pass
+        self.mySequence.save_sequence()
 
     def load_sequence(self):
+        self.sequenceTableWidget.setRowCount(0)
         logger.info("load_sequence()")
-        pass
+        self.statusbar.showMessage("Loading Sequence File...", 1500)
+        self.mySequence.load_sequence()
+        rowcount = self.mySequence.length()
+        self.mySequence.get_sequence_qtable_from_array(self.mySequence.steps,self.sequenceTableWidget, rowcount)
+        logger.info("load_sequence(): self.mySequence.steps: " + str(self.mySequence.steps))
+
+    # This is an event handler for any changes to the sequence tableWidget
+    def sequence_table_update(self, item):
+        row = item.row()
+        col = item.column()
+        logger.info("sequence_table_update(item): " + str(row) + "," + str(col))
+        step_time = self.sequenceTableWidget.item(row,0)
+        step_temperature = self.sequenceTableWidget.item(row,1)
+        if step_time is not None:
+            self.mySequence.stepTemperatures[row]= float(step_time.text())
+        if step_temperature is not None:
+            self.mySequence.stepTimesInSeconds[row] =  float(step_temperature.text())
+        logger.info("sequence_table_update(): self.mySequence.steps: " + str(self.mySequence.steps))
 
 # Main entry point
 def run():
