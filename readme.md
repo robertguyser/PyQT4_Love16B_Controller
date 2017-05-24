@@ -21,6 +21,6 @@ Software to allow the control, recording and analysis of Love 16B PID controller
 * Love 16B pattern reading and writing
 * Error and rate of change plotting
 * Additional setting controls
-* Farenheit Mode
+* Farenheit and Kelvin Modes
 * Profile based PID controller abstraction to allow easy hardware integration
 * Clean up the messiness
